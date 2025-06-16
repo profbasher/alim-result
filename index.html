@@ -6,221 +6,493 @@
     <title>Student Result Manager</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-gray-100 text-gray-800 p-4">
+  <body class="bg-gray-100 text-gray-800 p-6">
     <div class="max-w-7xl mx-auto">
-      <h1 class="text-3xl font-bold text-center mb-6">
-        📊 Student Result Manager
+      <h1 class="text-2xl font-bold mb-6 text-center">
+        Student Result Manager
       </h1>
 
-      <!-- Form -->
+      <!-- Search Form -->
+      <div class="mb-6">
+        <input
+          id="searchRoll"
+          type="text"
+          placeholder="Enter Roll to Search"
+          class="p-2 border rounded w-1/2"
+        />
+        <button
+          onclick="searchStudent()"
+          class="bg-blue-600 text-white px-4 py-2 rounded ml-2"
+        >
+          Search
+        </button>
+      </div>
+
+      <!-- Entry Form -->
       <form
-        id="resultForm"
-        class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white p-6 rounded shadow"
+        id="studentForm"
+        class="grid grid-cols-1 md:grid-cols-3 gap-4 bg-white p-6 rounded shadow"
       >
-        <input name="id" type="hidden" id="entryId" />
-        <input name="roll" placeholder="Student Roll" class="input" required />
-
         <input
-          name="bangla1_cq"
-          placeholder="Bangla1 CQ"
-          class="input"
-          required
-        />
-        <input
-          name="bangla1_mcq"
-          placeholder="Bangla1 MCQ"
-          class="input"
-          required
-        />
-        <input
-          name="bangla2_cq"
-          placeholder="Bangla2 CQ"
-          class="input"
-          required
-        />
-        <input
-          name="bangla2_mcq"
-          placeholder="Bangla2 MCQ"
-          class="input"
+          type="text"
+          id="roll"
+          placeholder="Student ID (Roll)"
+          class="p-2 border rounded"
           required
         />
 
-        <input name="english1" placeholder="English 1" class="input" required />
-        <input name="english2" placeholder="English 2" class="input" required />
-        <input name="math" placeholder="Mathematics" class="input" required />
-        <input
-          name="social"
-          placeholder="Social Sciences"
-          class="input"
-          required
-        />
+        <label class="block">
+          Quran and Tajweed:
+          <input
+            type="text"
+            id="quran"
+            class="border p-1"
+            inputmode="numeric"
+            pattern="[\d\+\-\*\/\.\s]*"
+            placeholder="e.g. 25+5"
+          />
+          <span id="quran-preview" class="text-green-600 text-sm ml-2"></span>
+        </label>
 
-        <input name="arabic1" placeholder="Arabic 1" class="input" required />
-        <input name="arabic2" placeholder="Arabic 2" class="input" required />
-        <input
-          name="islamic_history"
-          placeholder="Islamic History"
-          class="input"
-          required
-        />
-        <input
-          name="quran"
-          placeholder="Quran & Tajweed"
-          class="input"
-          required
-        />
+        <!-- <input
+          type="text"
+          inputmode="numeric"
+          pattern="[\d\+\-\*\/\.\s]*"
+          id="quran"
+          placeholder="Quran and Tajweed"
+          class="p-2 border rounded"
+        /> -->
+        <label class="block">
+          Hadith:
+          <input
+            type="text"
+            inputmode="numeric"
+            pattern="[\d\+\-\*\/\.\s]*"
+            id="hadith"
+            placeholder="e.g. 25+5"
+            class="border p-1"
+          />
+          <span id="hadith-preview" class="text-green-600 text-sm ml-2"></span>
+        </label>
 
-        <input name="hadith" placeholder="Hadith" class="input" required />
-        <input name="fiqh" placeholder="Fiqh" class="input" required />
-        <input name="mantiq" placeholder="Mantiq" class="input" required />
+        <label class="block">
+          Fiqh 1:
+          <input
+            type="text"
+            inputmode="numeric"
+            pattern="[\d\+\-\*\/\.\s]*"
+            id="fiqh1"
+            placeholder="e.g. 25+5"
+            class="border p-1"
+          />
+          <span id="fiqh1-preview" class="text-green-600 text-sm ml-2"></span>
+        </label>
+
+        <label class="block">
+          Arabic 1:
+          <input
+            type="text"
+            inputmode="numeric"
+            pattern="[\d\+\-\*\/\.\s]*"
+            id="arabic1"
+            placeholder="e.g. 25+5"
+            class="border p-1"
+          />
+          <span id="arabic1-preview" class="text-green-600 text-sm ml-2"></span>
+        </label>
+        <label class="block">
+          Bangla1:
+          <input
+            type="text"
+            inputmode="numeric"
+            pattern="[\d\+\-\*\/\.\s]*"
+            id="bangla1"
+            placeholder="e.g. 25+5"
+            class="border p-1"
+          />
+          <span id="bangla1-preview" class="text-green-600 text-sm ml-2"></span>
+        </label>
+        <label class="block">
+          <input
+            type="text"
+            inputmode="numeric"
+            pattern="[\d\+\-\*\/\.\s]*"
+            id="bangla2"
+            placeholder="e.g. 25+5"
+            class="border p-1"
+          />
+          <span id="bangla2-preview" class="text-green-600 text-sm ml-2"></span>
+        </label>
+        <label class="block">
+          English 1
+          <input
+            type="text"
+            inputmode="numeric"
+            pattern="[\d\+\-\*\/\.\s]*"
+            id="english1"
+            placeholder="e.g. 25+5"
+            class="border p-1"
+          />
+          <span id="bangla2-preview" class="text-green-600 text-sm ml-2"></span>
+        </label>
+        <label class="block">
+          English2:
+          <input
+            type="text"
+            inputmode="numeric"
+            pattern="[\d\+\-\*\/\.\s]*"
+            id="english2"
+            placeholder="e.g. 25+5"
+            class="border p-1"
+          />
+          <span
+            id="english2-preview"
+            class="text-green-600 text-sm ml-2"
+          ></span>
+        </label>
+        <label class="block">
+          ICT:
+          <input
+            type="text"
+            inputmode="numeric"
+            pattern="[\d\+\-\*\/\.\s]*"
+            id="ict"
+            placeholder="e.g. 25+5"
+            class="border p-1"
+          />
+          <span id="ict-preview" class="text-green-600 text-sm ml-2"></span>
+        </label>
+        <label class="block">
+          Mantiq
+          <input
+            type="text"
+            inputmode="numeric"
+            pattern="[\d\+\-\*\/\.\s]*"
+            id="mantiq"
+            placeholder="e.g. 25+5"
+            class="border p-1"
+          />
+          <span id="mantiq-preview" class="text-green-600 text-sm ml-2"></span>
+        </label>
         <input
-          name="total"
+          type="text"
+          inputmode="numeric"
+          pattern="[\d\+\-\*\/\.\s]*"
+          id="subject12"
+          placeholder="Ethics1/Biology1/Math1"
+          class="p-2 border rounded"
+        />
+        <input
+          type="text"
+          inputmode="numeric"
+          pattern="[\d\+\-\*\/\.\s]*"
+          id="subject13"
+          placeholder="Ethics2/Biology2/Math2"
+          class="p-2 border rounded"
+        />
+        <input
+          type="text"
+          inputmode="numeric"
+          pattern="[\d\+\-\*\/\.\s]*"
+          id="subject14"
+          placeholder="Islamic History/Chemistry1"
+          class="p-2 border rounded"
+        />
+        <input
+          type="text"
+          inputmode="numeric"
+          pattern="[\d\+\-\*\/\.\s]*"
+          id="subject15"
+          placeholder="Fiqh2/Chemistry2"
+          class="p-2 border rounded"
+        />
+        <input
+          type="text"
+          inputmode="numeric"
+          pattern="[\d\+\-\*\/\.\s]*"
+          id="subject16"
+          placeholder="Social Science/Physics1"
+          class="p-2 border rounded"
+        />
+        <input
+          type="text"
+          inputmode="numeric"
+          pattern="[\d\+\-\*\/\.\s]*"
+          id="subject17"
+          placeholder="Arabic2/Physics2"
+          class="p-2 border rounded"
+        />
+        <input
+          type="number"
+          id="total"
           placeholder="Total Marks"
-          class="input"
-          required
+          class="p-2 border rounded bg-gray-200"
           readonly
         />
 
-        <button
-          type="submit"
-          class="col-span-2 md:col-span-4 bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
-        >
-          Submit
-        </button>
+        <div class="col-span-1 md:col-span-3 text-right mt-4">
+          <button
+            type="submit"
+            class="bg-green-600 text-white px-6 py-2 rounded"
+          >
+            Save
+          </button>
+        </div>
       </form>
 
-      <!-- Table -->
-      <div class="mt-8 overflow-x-auto">
-        <table class="min-w-full bg-white border rounded shadow">
-          <thead class="bg-gray-200">
-            <tr class="text-sm text-left">
-              <th class="p-2">#</th>
-              <th class="p-2">Total</th>
-              <th class="p-2">Actions</th>
+      <!-- Student Result Table -->
+      <div class="mt-10 overflow-x-auto">
+        <table class="min-w-full bg-white border">
+          <thead>
+            <tr class="bg-gray-200">
+              <th class="p-2 border">Roll</th>
+              <th class="p-2 border">Total</th>
+              <th class="p-2 border">Actions</th>
             </tr>
           </thead>
-          <tbody id="dataBody" class="text-sm"></tbody>
+          <tbody id="resultTable"></tbody>
         </table>
       </div>
     </div>
 
     <script>
-      const form = document.getElementById("resultForm");
-      const dataBody = document.getElementById("dataBody");
+      let editRoll = null;
+      const apiURL =
+        "https://script.google.com/macros/s/AKfycbxz9K3p_oQWe-hsESXEUiHbFlSxHrSV3Mjg0146uP8WefZT3dmZyZA2qWrz_TAy4uocAQ/exec";
 
-      const API_URL =
-        "https://script.google.com/macros/s/AKfycbwM0UzEVtir1wgLXFy5DJpcEuIyKbpIb3BPhkxZycjN8Ggp4hmVJHa5jjT7G7ze06kZpA/exec";
-
-      const getTotal = (data) => {
-        const fields = [
-          "bangla1_cq",
-          "bangla1_mcq",
-          "bangla2_cq",
-          "bangla2_mcq",
-          "english1",
-          "english2",
-          "math",
-          "social",
-          "arabic1",
-          "arabic2",
-          "islamic_history",
-          "quran",
-          "hadith",
-          "fiqh",
-          "mantiq",
-        ];
-        return fields.reduce((acc, key) => acc + parseInt(data[key] || 0), 0);
-      };
-
-      const loadData = async () => {
-        const res = await fetch(API_URL + "?action=read");
-        const json = await res.json();
-        dataBody.innerHTML = "";
-        json.data.forEach((row, i) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-          <td class="p-2">${i + 1}</td>
-          <td class="p-2">${row.total}</td>
-          <td class="p-2 space-x-2">
-            <button onclick='editEntry(${JSON.stringify(
-              row
-            )})' class="text-blue-600">Edit</button>
-            <button onclick='deleteEntry("${
-              row.id
-            }")' class="text-red-600">Delete</button>
-          </td>`;
-          dataBody.appendChild(tr);
-        });
-      };
-
-      form.addEventListener("input", () => {
-        const data = Object.fromEntries(new FormData(form));
-        form.total.value = getTotal(data);
-      });
-
-      // form.addEventListener("submit", async (e) => {
-      //   e.preventDefault();
-      //   const data = Object.fromEntries(new FormData(form));
-      //   data.total = getTotal(data);
-      //   const action = data.id ? "update" : "create";
-      //   const res = await fetch(API_URL, {
-      //     method: "POST",
-      //     body: JSON.stringify({ action, ...data }),
-      //   });
-      //   if (!res.success) {
-      //     alert(res.message || "Failed to save result.");
-      //     return;
-      //   }
-
-      //   form.reset();
-      //   loadData();
-      // });
+      const form = document.getElementById("studentForm");
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        const data = Object.fromEntries(new FormData(form));
-        data.total = getTotal(data);
-        const action = data.id ? "update" : "create";
 
-        const response = await fetch(API_URL, {
-          method: "POST",
-          body: JSON.stringify({ action, ...data }),
-        });
-
-        const res = await response.json(); // ✅ Fix: parse JSON first
-
-        if (!res.success) {
-          alert(res.message || "Failed to save result.");
-          return;
+        function evaluate(value) {
+          try {
+            return Function(`return ${value}`)(); // safely evaluates math expression
+          } catch {
+            return 0;
+          }
         }
 
+        // List of field IDs to watch
+        const fields = [
+          "quran",
+          "hadith",
+          "fiqh1",
+          "arabic1",
+          "bangla1",
+          "bangla2",
+          "english1",
+          "english2",
+          "ict",
+          "mantiq",
+          "subject12",
+          "subject13",
+          "subject14",
+          "subject15",
+          "subject16",
+          "subject17",
+        ];
+
+
+        const formData = {
+          roll: roll.value.trim(), // Don't evaluate roll
+          quran: evaluate(quran.value),
+          hadith: evaluate(hadith.value),
+          fiqh1: evaluate(fiqh1.value),
+          arabic1: evaluate(arabic1.value),
+          bangla1: evaluate(bangla1.value),
+          bangla2: evaluate(bangla2.value),
+          english1: evaluate(english1.value),
+          english2: evaluate(english2.value),
+          ict: evaluate(ict.value),
+          mantiq: evaluate(mantiq.value),
+          subject12: evaluate(subject12.value),
+          subject13: evaluate(subject13.value),
+          subject14: evaluate(subject14.value),
+          subject15: evaluate(subject15.value),
+          subject16: evaluate(subject16.value),
+          subject17: evaluate(subject17.value),
+        };
+
+        // Live calculation
+        // function evaluate(expr) {
+        //   try {
+        //     return Function(`return ${expr}`)();
+        //   } catch {
+        //     return "";
+        //   }
+        // }
+
+        // Calculate total
+        const scores = Object.values(formData)
+          .slice(1)
+          .map((n) => parseFloat(n) || 0);
+        const total = scores.reduce((a, b) => a + b, 0);
+        totalInput.value = total;
+        formData.total = total;
+
+        const payload = {
+          action: editRoll ? "update" : "create",
+          data: formData,
+          roll: editRoll,
+        };
+
+        const response = await fetch(apiURL, {
+          method: "POST",
+          body: JSON.stringify(payload),
+        });
+        const result = await response.json();
+        alert(result.message);
+
         form.reset();
-        alert("Result saved successfully!");
-        loadData();
+        editRoll = null;
+        loadAll();
       });
 
-      const editEntry = (data) => {
-        Object.keys(data).forEach((k) => {
-          if (form[k]) form[k].value = data[k];
-        });
-      };
-
-      const deleteEntry = async (id) => {
-        if (!confirm("Are you sure to delete?")) return;
-        await fetch(API_URL, {
-          method: "POST",
-          body: JSON.stringify({ action: "delete", id }),
-        });
-        loadData();
-      };
-
-      loadData();
-    </script>
-
-    <style>
-      .input {
-        @apply border border-gray-300 rounded px-3 py-1 w-full;
+      async function searchStudent() {
+        const roll = document.getElementById("searchRoll").value;
+        const res = await fetch(`${apiURL}?action=read&roll=${roll}`);
+        const data = await res.json();
+        document.getElementById("resultTable").innerHTML = `
+        <tr>
+          <td class="border p-2">${data.roll}</td>
+          <td class="border p-2">${data.total}</td>
+          <td class="border p-2"><button onclick="deleteStudent('${data.roll}')" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button></td>
+        </tr>`;
       }
-    </style>
+
+      async function loadAll() {
+        const res = await fetch(`${apiURL}?action=read`);
+        const students = await res.json();
+
+        const rows = students
+          .map(
+            (s) =>
+              `<tr>
+            <td class="border p-2">${s.roll}</td>
+            <td class="border p-2">${s.total}</td>
+            <td class="border p-2">
+              <button onclick="editStudent('${s.roll}')" class="bg-yellow-500 text-white px-2 py-1 rounded mr-2">Edit</button>
+              <button onclick="deleteStudent('${s.roll}')" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+            </td>
+          </tr>`
+          )
+          .join("");
+
+        // const rows = students
+        //   .map(
+        //     (s) => `
+        // <tr>
+        //   <td class="border p-2">${s.roll}</td>
+        //   <td class="border p-2">${s.total}</td>
+        //   <td class="border p-2">
+        //   <button onclick="editStudent('${s.roll}')" class="bg-yellow-500 text-white px-2 py-1 rounded mr-2">Edit</button>
+        //   <button onclick="deleteStudent('${s.roll}')" class="bg-red-500 text-white px-2 py-1 rounded">Delete</  button></td>
+        //   </tr>`
+        //   )
+        //   .join("");
+        document.getElementById("resultTable").innerHTML = rows;
+      }
+
+      // async function deleteStudent(roll) {
+      //   if (!confirm(`Delete student with Roll ${roll}?`)) return;
+      //   const res = await fetch(apiURL, {
+      //     method: "POST",
+      //     body: JSON.stringify({ action: "delete", roll }),
+      //   });
+      //   const result = await res.json();
+      //   alert(result.message);
+      //   loadAll();
+      // }
+
+      function deleteStudent(roll) {
+        if (!confirm("Are you sure you want to delete this record?")) return;
+
+        fetch(apiURL, {
+          method: "POST",
+          body: JSON.stringify({
+            action: "delete",
+            roll: roll,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            alert(data.message);
+            loadAll();
+          })
+          .catch((err) => alert("Delete failed"));
+      }
+
+      function editStudent(roll) {
+        fetch(`${apiURL}?action=read&roll=${roll}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (!data.roll) return alert("Student not found.");
+            editRoll = data.roll;
+            rollInput.value = data.roll;
+            quran.value = data.quran;
+            hadith.value = data.hadith;
+            fiqh1.value = data.fiqh1;
+            arabic1.value = data.arabic1;
+            bangla1.value = data.bangla1;
+            bangla2.value = data.bangla2;
+            english1.value = data.english1;
+            english2.value = data.english2;
+            ict.value = data.ict;
+            mantiq.value = data.mantiq;
+            subject12.value = data.subject12;
+            subject13.value = data.subject13;
+            subject14.value = data.subject14;
+            subject15.value = data.subject15;
+            subject16.value = data.subject16;
+            subject17.value = data.subject17;
+            totalInput.value = data.total;
+          });
+      }
+
+      const rollInput = document.getElementById("roll");
+      const totalInput = document.getElementById("total");
+      loadAll();
+
+      function evaluate(value) {
+        try {
+          return Function(`return ${value}`)();
+        } catch {
+          return 0;
+        }
+      }
+
+      const fields = [
+        "quran",
+        "hadith",
+        "fiqh1",
+        "arabic1",
+        "bangla1",
+        "bangla2",
+        "english1",
+        "english2",
+        "ict",
+        "mantiq",
+        "subject12",
+        "subject13",
+        "subject14",
+        "subject15",
+        "subject16",
+        "subject17",
+      ];
+
+      fields.forEach((id) => {
+        const input = document.getElementById(id);
+        const preview = document.getElementById(`${id}-preview`);
+
+        if (input && preview) {
+          input.addEventListener("input", () => {
+            const val = input.value.trim();
+            const result = evaluate(val);
+            preview.textContent = val && !isNaN(result) ? `= ${result}` : "";
+          });
+        }
+      });
+    </script>
   </body>
 </html>
