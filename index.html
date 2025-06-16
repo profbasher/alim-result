@@ -1,60 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Result Manager</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 p-4">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Result Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 text-gray-800 p-4">
+    <div class="max-w-7xl mx-auto">
+      <h1 class="text-3xl font-bold text-center mb-6">
+        📊 Student Result Manager
+      </h1>
 
-  <div class="max-w-5xl mx-auto bg-white shadow-md rounded-lg p-6">
-    <h2 class="text-2xl font-bold mb-4 text-center">Student Result Manager</h2>
+      <!-- Form -->
+      <form
+        id="resultForm"
+        class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white p-6 rounded shadow"
+      >
+        <input name="id" type="hidden" id="entryId" />
+        <input name="roll" placeholder="Student Roll" class="input" required />
 
-    <!-- Form -->
-    <form id="resultForm" class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <input type="hidden" id="rowId" />
-      <input class="border p-2 rounded" type="text" id="studentId" placeholder="Student ID" required />
-      <input class="border p-2 rounded" type="text" id="bangla" placeholder="Bangla" required />
-      <input class="border p-2 rounded" type="text" id="english" placeholder="English" required />
-      <input class="border p-2 rounded" type="text" id="math" placeholder="Mathematics" required />
-      <input class="border p-2 rounded" type="text" id="social" placeholder="Social Sciences" required />
-      <input class="border p-2 rounded" type="text" id="arabic" placeholder="Arabic" required />
-      <input class="border p-2 rounded" type="text" id="history" placeholder="Islamic History" required />
-      <input class="border p-2 rounded" type="text" id="quran" placeholder="Quran & Tajweed" required />
-      <input class="border p-2 rounded" type="text" id="hadith" placeholder="Hadith" required />
-      <input class="border p-2 rounded" type="text" id="fiqh" placeholder="Fiqh" required />
-      <input class="border p-2 rounded" type="text" id="mantiq" placeholder="Mantiq" required />
-      <div class="col-span-2 md:col-span-3 flex gap-2">
-        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Save</button>
-        <button type="reset" id="resetBtn" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500">Reset</button>
+        <input
+          name="bangla1_cq"
+          placeholder="Bangla1 CQ"
+          class="input"
+          required
+        />
+        <input
+          name="bangla1_mcq"
+          placeholder="Bangla1 MCQ"
+          class="input"
+          required
+        />
+        <input
+          name="bangla2_cq"
+          placeholder="Bangla2 CQ"
+          class="input"
+          required
+        />
+        <input
+          name="bangla2_mcq"
+          placeholder="Bangla2 MCQ"
+          class="input"
+          required
+        />
+
+        <input name="english1" placeholder="English 1" class="input" required />
+        <input name="english2" placeholder="English 2" class="input" required />
+        <input name="math" placeholder="Mathematics" class="input" required />
+        <input
+          name="social"
+          placeholder="Social Sciences"
+          class="input"
+          required
+        />
+
+        <input name="arabic1" placeholder="Arabic 1" class="input" required />
+        <input name="arabic2" placeholder="Arabic 2" class="input" required />
+        <input
+          name="islamic_history"
+          placeholder="Islamic History"
+          class="input"
+          required
+        />
+        <input
+          name="quran"
+          placeholder="Quran & Tajweed"
+          class="input"
+          required
+        />
+
+        <input name="hadith" placeholder="Hadith" class="input" required />
+        <input name="fiqh" placeholder="Fiqh" class="input" required />
+        <input name="mantiq" placeholder="Mantiq" class="input" required />
+        <input
+          name="total"
+          placeholder="Total Marks"
+          class="input"
+          required
+          readonly
+        />
+
+        <button
+          type="submit"
+          class="col-span-2 md:col-span-4 bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+        >
+          Submit
+        </button>
+      </form>
+
+      <!-- Table -->
+      <div class="mt-8 overflow-x-auto">
+        <table class="min-w-full bg-white border rounded shadow">
+          <thead class="bg-gray-200">
+            <tr class="text-sm text-left">
+              <th class="p-2">#</th>
+              <th class="p-2">Total</th>
+              <th class="p-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="dataBody" class="text-sm"></tbody>
+        </table>
       </div>
-    </form>
-
-    <!-- Table -->
-    <div class="overflow-x-auto mt-6">
-      <table class="min-w-full bg-white border">
-        <thead class="bg-gray-200 text-gray-600">
-          <tr>
-            <th class="border p-2">Student ID</th>
-            <th class="border p-2">Bangla</th>
-            <th class="border p-2">English</th>
-            <th class="border p-2">Math</th>
-            <th class="border p-2">Social</th>
-            <th class="border p-2">Arabic</th>
-            <th class="border p-2">History</th>
-            <th class="border p-2">Quran</th>
-            <th class="border p-2">Hadith</th>
-            <th class="border p-2">Fiqh</th>
-            <th class="border p-2">Mantiq</th>
-            <th class="border p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="resultTable" class="text-center text-sm"></tbody>
-      </table>
     </div>
-  </div>
 
-  <script src="script.js"></script>
-</body>
+    <script>
+      const form = document.getElementById("resultForm");
+      const dataBody = document.getElementById("dataBody");
+
+      const API_URL =
+        "https://script.google.com/macros/s/AKfycbwM0UzEVtir1wgLXFy5DJpcEuIyKbpIb3BPhkxZycjN8Ggp4hmVJHa5jjT7G7ze06kZpA/exec";
+
+      const getTotal = (data) => {
+        const fields = [
+          "bangla1_cq",
+          "bangla1_mcq",
+          "bangla2_cq",
+          "bangla2_mcq",
+          "english1",
+          "english2",
+          "math",
+          "social",
+          "arabic1",
+          "arabic2",
+          "islamic_history",
+          "quran",
+          "hadith",
+          "fiqh",
+          "mantiq",
+        ];
+        return fields.reduce((acc, key) => acc + parseInt(data[key] || 0), 0);
+      };
+
+      const loadData = async () => {
+        const res = await fetch(API_URL + "?action=read");
+        const json = await res.json();
+        dataBody.innerHTML = "";
+        json.data.forEach((row, i) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+          <td class="p-2">${i + 1}</td>
+          <td class="p-2">${row.total}</td>
+          <td class="p-2 space-x-2">
+            <button onclick='editEntry(${JSON.stringify(
+              row
+            )})' class="text-blue-600">Edit</button>
+            <button onclick='deleteEntry("${
+              row.id
+            }")' class="text-red-600">Delete</button>
+          </td>`;
+          dataBody.appendChild(tr);
+        });
+      };
+
+      form.addEventListener("input", () => {
+        const data = Object.fromEntries(new FormData(form));
+        form.total.value = getTotal(data);
+      });
+
+      // form.addEventListener("submit", async (e) => {
+      //   e.preventDefault();
+      //   const data = Object.fromEntries(new FormData(form));
+      //   data.total = getTotal(data);
+      //   const action = data.id ? "update" : "create";
+      //   const res = await fetch(API_URL, {
+      //     method: "POST",
+      //     body: JSON.stringify({ action, ...data }),
+      //   });
+      //   if (!res.success) {
+      //     alert(res.message || "Failed to save result.");
+      //     return;
+      //   }
+
+      //   form.reset();
+      //   loadData();
+      // });
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form));
+        data.total = getTotal(data);
+        const action = data.id ? "update" : "create";
+
+        const response = await fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify({ action, ...data }),
+        });
+
+        const res = await response.json(); // ✅ Fix: parse JSON first
+
+        if (!res.success) {
+          alert(res.message || "Failed to save result.");
+          return;
+        }
+
+        form.reset();
+        alert("Result saved successfully!");
+        loadData();
+      });
+
+      const editEntry = (data) => {
+        Object.keys(data).forEach((k) => {
+          if (form[k]) form[k].value = data[k];
+        });
+      };
+
+      const deleteEntry = async (id) => {
+        if (!confirm("Are you sure to delete?")) return;
+        await fetch(API_URL, {
+          method: "POST",
+          body: JSON.stringify({ action: "delete", id }),
+        });
+        loadData();
+      };
+
+      loadData();
+    </script>
+
+    <style>
+      .input {
+        @apply border border-gray-300 rounded px-3 py-1 w-full;
+      }
+    </style>
+  </body>
 </html>
